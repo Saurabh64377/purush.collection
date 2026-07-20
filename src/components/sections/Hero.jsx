@@ -81,7 +81,7 @@ export default function Hero() {
             className="relative mx-auto w-full max-w-md"
           >
             <ImageReveal className="aspect-[4/5] rounded-3xl shadow-deep" panelColor="bg-charcoal">
-              <DummyImage seed="../public/purush2.png" width={800} height={1000} tone="dark" eager alt="Campaign shoot" className="absolute inset-0" />
+              <DummyImage seed="/purush2.png" width={800} height={1000} tone="dark" eager alt="Campaign shoot" className="absolute inset-0" />
             </ImageReveal>
 
             <div className="absolute -bottom-6 -left-6 z-20 flex items-center gap-3 rounded-2xl bg-ink p-3 pr-5 shadow-deep ring-1 ring-ivory/10">
