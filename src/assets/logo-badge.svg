@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect x="4" y="4" width="192" height="192" rx="24" fill="#0E0E0E" stroke="#FF3D77" stroke-width="1.5"/>
+  <text x="100" y="98" text-anchor="middle" font-family="'Noto Sans Devanagari', sans-serif" font-weight="700" font-size="44" fill="url(#pinkGrad)">पुरुष</text>
+  <text x="100" y="132" text-anchor="middle" font-family="'Noto Sans Devanagari', sans-serif" font-weight="600" font-size="26" fill="#FFFFFF">कलेक्शन</text>
+  <defs>
+    <linearGradient id="pinkGrad" x1="0" y1="60" x2="200" y2="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF7FA8"/>
+      <stop offset="1" stop-color="#D81958"/>
+    </linearGradient>
+  </defs>
+</svg>
