@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import ImageReveal from '../../ui/ImageReveal'
 
-const API_BASE = import.meta.env.PROD ? '' : 'http://localhost:5000'
+const API_BASE = import.meta.env.PROD ? '' : (import.meta.env.VITE_API_URL || 'http://localhost:5000')
 
 function getImageUrl(image) {
   if (!image) return ''

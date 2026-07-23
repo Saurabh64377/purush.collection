@@ -11,7 +11,7 @@ import {
 } from 'react-icons/pi';
 import api from '../lib/api';
 
-const API_BASE = import.meta.env.PROD ? '' : 'http://localhost:5000';
+const API_BASE = import.meta.env.PROD ? '' : (import.meta.env.VITE_API_URL || 'http://localhost:5000');
 
 export default function Collections() {
   const [collections, setCollections] = useState([]);
