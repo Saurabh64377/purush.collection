@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { PiWhatsappLogoBold, PiArrowUpBold } from 'react-icons/pi'
-import { SOCIALS } from '../../utils/constants'
-
-const whatsapp = SOCIALS.find((s) => s.label === 'WhatsApp')
+import { useSocials } from '../../context/SiteDataContext'
 
 export default function FloatingActions() {
   const [showTop, setShowTop] = useState(false)
+  const socials = useSocials()
+  const whatsapp = socials.find((s) => s.label === 'WhatsApp')
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 600)

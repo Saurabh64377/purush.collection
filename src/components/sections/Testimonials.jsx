@@ -2,11 +2,13 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Pagination } from 'swiper/modules'
 import { PiQuotesBold } from 'react-icons/pi'
 import SectionHeading from '../ui/SectionHeading'
-import { TESTIMONIALS } from '../../data/testimonials'
+import { useSetting } from '../../context/SiteDataContext'
 import 'swiper/css'
 import 'swiper/css/pagination'
 
 export default function Testimonials() {
+  const testimonials = useSetting('testimonials') || []
+
   return (
     <section id="testimonials" className="relative bg-cream py-28 sm:py-36">
       <div className="section-container flex flex-col gap-14">
@@ -27,16 +29,11 @@ export default function Testimonials() {
             768: { slidesPerView: 2 },
             1280: { slidesPerView: 3 },
           }}
-          // This section is React.lazy()-loaded, so Swiper can mount while
-          // its container is still settling layout and measure a bad width
-          // once (seen as a multi-million-pixel slide). observer/observeParents
-          // make Swiper re-measure via MutationObserver instead of trusting
-          // only its one-time init measurement.
           observer
           observeParents
           className="!pb-4 w-full"
         >
-          {TESTIMONIALS.map((t) => (
+          {testimonials.map((t) => (
             <SwiperSlide key={t.name} className="h-auto">
               <div className="bg-[#FFF3F6] ring-1 ring-pink/15 rounded-2xl p-8 h-full flex flex-col gap-6 shadow-luxury">
                 <PiQuotesBold className="text-3xl text-pink/70" />

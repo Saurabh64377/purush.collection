@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { PiPlusBold } from 'react-icons/pi'
 import SectionHeading from '../ui/SectionHeading'
-import { FAQS } from '../../data/faq'
+import { useSetting } from '../../context/SiteDataContext'
 
 function FaqItem({ faq, isOpen, onToggle, id }) {
   return (
@@ -49,6 +49,7 @@ function FaqItem({ faq, isOpen, onToggle, id }) {
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(0)
+  const faqs = useSetting('faqs') || []
 
   return (
     <section className="relative bg-cream py-28 sm:py-36">
@@ -56,7 +57,7 @@ export default function FAQ() {
         <SectionHeading eyebrow="FAQ" title="Common Questions" align="center" />
 
         <div>
-          {FAQS.map((faq, i) => (
+          {faqs.map((faq, i) => (
             <FaqItem
               key={faq.question}
               id={i}

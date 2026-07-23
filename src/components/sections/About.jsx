@@ -2,31 +2,16 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import SectionHeading from '../ui/SectionHeading'
 import ImageReveal from '../ui/ImageReveal'
-import DummyImage from '../ui/DummyImage'
-import { BRAND } from '../../utils/constants'
-
-const PILLARS = [
-  {
-    number: '01',
-    title: 'Mission',
-    body: 'Bring premium, internationally-inspired fashion to every young man in Bridgemanganj — without the international price tag.',
-  },
-  {
-    number: '02',
-    title: 'Vision',
-    body: 'Become the name UP\'s next generation trusts to define how they show up in the world.',
-  },
-  {
-    number: '03',
-    title: 'Philosophy',
-    body: 'Style isn\'t bought off a shelf — it\'s built. Every piece we curate is chosen to help you own yours.',
-  },
-]
+import { useBrand, useSetting } from '../../context/SiteDataContext'
 
 export default function About() {
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
   const y = useTransform(scrollYProgress, [0, 1], ['-8%', '8%'])
+  const brand = useBrand()
+  const about = useSetting('about') || {}
+
+  const pillars = about.pillars || []
 
   return (
     <section id="about" ref={ref} className="relative bg-cream py-28 sm:py-36 overflow-hidden">
@@ -34,8 +19,8 @@ export default function About() {
         <div className="flex flex-col gap-8">
           <SectionHeading
             eyebrow="About the Brand"
-            title={`The Story of ${BRAND.name}`}
-            description="Born in Bridgemanganj, built for the nation. Puपुरुष Collection started with a simple belief: young men deserve fashion that feels premium, fits perfectly, and never costs more than it should."
+            title={about.heading || `The Story of ${brand.name}`}
+            description={about.description}
           />
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -44,21 +29,19 @@ export default function About() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-stone leading-relaxed max-w-xl"
           >
-            From oversized streetwear to sharp ethnic fits for weddings and festivals, every
-            collection is chosen with one question in mind — will this make him feel like the
-            best version of himself? That's affordable luxury, done right.
+            {about.paragraph}
           </motion.p>
         </div>
 
         <motion.div style={{ y }} className="relative">
           <ImageReveal className="aspect-[4/5] w-full rounded-3xl shadow-luxury" panelColor="bg-cream">
-            <DummyImage seed="/image.png" width={800} height={1000} tone="light" alt="Shop signboard" className="absolute inset-0" />
+            <img src={about.image || '/image.png'} alt="Shop" className="absolute inset-0 h-full w-full object-cover" />
           </ImageReveal>
         </motion.div>
       </div>
 
       <div className="section-container mt-24">
-        {PILLARS.map(({ number, title, body }, i) => (
+        {pillars.map(({ number, title, body }, i) => (
           <motion.div
             key={title}
             initial={{ opacity: 0, y: 24 }}

@@ -1,17 +1,18 @@
 import { useMemo, useState } from 'react'
 import SectionHeading from '../../ui/SectionHeading'
 import CollectionCard from './CollectionCard'
-import { COLLECTIONS } from '../../../data/collections'
+import { useCategories } from '../../../context/SiteDataContext'
 
 const FILTERS = ['All', 'Trending', 'New']
 
 export default function Collections() {
   const [filter, setFilter] = useState('All')
+  const categories = useCategories()
 
   const items = useMemo(() => {
-    if (filter === 'All') return COLLECTIONS
-    return COLLECTIONS.filter((c) => c.tag === filter)
-  }, [filter])
+    if (filter === 'All') return categories
+    return categories.filter((c) => c.tag === filter)
+  }, [filter, categories])
 
   return (
     <section id="collections" className="relative bg-cream py-28 sm:py-36">
@@ -43,7 +44,7 @@ export default function Collections() {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
           {items.map((item, i) => (
-            <CollectionCard key={item.name} item={item} index={i} />
+            <CollectionCard key={item._id || item.name} item={item} index={i} />
           ))}
         </div>
       </div>

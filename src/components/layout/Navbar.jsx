@@ -3,11 +3,13 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { PiListBold, PiXBold } from 'react-icons/pi'
 import Logo from '../logo/Logo'
 import MagneticButton from '../ui/MagneticButton'
-import { NAV_LINKS, BRAND } from '../../utils/constants'
+import { useBrand, useSetting } from '../../context/SiteDataContext'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const brand = useBrand()
+  const navLinks = useSetting('navLinks') || []
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -30,19 +32,19 @@ export default function Navbar() {
         }`}
       >
         <nav className="section-container flex items-center justify-between">
-          <a href="#home" className="relative z-10 flex items-center gap-3" aria-label={`${BRAND.name} — home`} data-cursor-hover>
+          <a href="#home" className="relative z-10 flex items-center gap-3" aria-label={`${brand.name} — home`} data-cursor-hover>
             <Logo size="nav" />
             <span
               className={`hidden sm:block font-display text-sm uppercase tracking-wide transition-colors duration-500 ${
                 scrolled ? 'text-graphite' : 'text-ivory'
               }`}
             >
-              {BRAND.short}
+              {brand.short}
             </span>
           </a>
 
           <ul className="hidden lg:flex items-center gap-9">
-            {NAV_LINKS.map((link) => (
+            {navLinks.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
@@ -90,7 +92,7 @@ export default function Navbar() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 z-40 bg-ink flex flex-col items-center justify-center gap-8 lg:hidden"
           >
-            {NAV_LINKS.map((link, i) => (
+            {navLinks.map((link, i) => (
               <motion.a
                 key={link.href}
                 href={link.href}
@@ -108,7 +110,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15 + NAV_LINKS.length * 0.07, duration: 0.5 }}
+              transition={{ delay: 0.15 + navLinks.length * 0.07, duration: 0.5 }}
               className="mt-4 rounded-full bg-pink text-ivory px-8 py-3 text-sm uppercase tracking-wide"
             >
               Contact Us

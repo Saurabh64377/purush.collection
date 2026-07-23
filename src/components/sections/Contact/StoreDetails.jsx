@@ -1,14 +1,17 @@
 import { motion } from 'framer-motion'
 import { PiMapPinBold, PiClockBold, PiUserBold, PiPhoneBold } from 'react-icons/pi'
-import { STORE, BRAND } from '../../../utils/constants'
-
-const ITEMS = [
-  { icon: PiMapPinBold, label: 'Address', value: STORE.addressOneLine },
-  { icon: PiUserBold, label: 'Founder', value: BRAND.founder },
-  { icon: PiPhoneBold, label: 'Phone', value: STORE.phoneDisplay, href: STORE.phoneHref },
-]
+import { useStore, useBrand } from '../../../context/SiteDataContext'
 
 export default function StoreDetails() {
+  const store = useStore()
+  const brand = useBrand()
+
+  const ITEMS = [
+    { icon: PiMapPinBold, label: 'Address', value: store.addressOneLine },
+    { icon: PiUserBold, label: 'Founder', value: brand.founder },
+    { icon: PiPhoneBold, label: 'Phone', value: store.phoneDisplay, href: store.phoneHref },
+  ]
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -24 }}
@@ -42,7 +45,7 @@ export default function StoreDetails() {
           </span>
           <div>
             <p className="text-xs uppercase tracking-wide text-ivory/50">Opening Hours</p>
-            {STORE.hours.map((h) => (
+            {(store.hours || []).map((h) => (
               <p key={h.day} className="text-ivory text-sm">
                 <span className="text-ivory/50">{h.day}:</span> {h.time}
               </p>
@@ -54,7 +57,7 @@ export default function StoreDetails() {
       <div className="relative aspect-video w-full rounded-2xl overflow-hidden ring-1 ring-ivory/10">
         <iframe
           title="Puपुरुष Collection store location"
-          src={STORE.mapEmbedSrc}
+          src={store.mapEmbedSrc}
           className="absolute inset-0 h-full w-full grayscale-[60%] contrast-125 invert-[0.92]"
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"

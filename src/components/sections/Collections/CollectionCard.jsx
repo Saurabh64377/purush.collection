@@ -1,8 +1,16 @@
 import { useRef } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
-import CategoryArt from '../../ui/CategoryArt'
 import ImageReveal from '../../ui/ImageReveal'
-import DummyImage from '../../ui/DummyImage'
+
+const API_BASE = import.meta.env.PROD ? '' : 'http://localhost:5000'
+
+function getImageUrl(image) {
+  if (!image) return ''
+  // External URLs (https://...) pass through as-is
+  if (image.startsWith('http')) return image
+  // Uploaded files need the backend URL prefix
+  return `${API_BASE}${image}`
+}
 
 export default function CollectionCard({ item, index }) {
   const ref = useRef(null)
@@ -22,6 +30,9 @@ export default function CollectionCard({ item, index }) {
     y.set(0.5)
   }
 
+  const imageUrl = getImageUrl(item.image)
+  const displayName = item.name
+
   return (
     <motion.div
       ref={ref}
@@ -35,10 +46,21 @@ export default function CollectionCard({ item, index }) {
       data-cursor-hover
       className="group relative aspect-[3/4] rounded-2xl overflow-hidden bg-creamDim cursor-none ring-1 ring-graphite/8"
     >
-      {/* <CategoryArt icon={item.image} index={index} className="absolute inset-0" /> */}
-      <ImageReveal className="aspect-[4/5] rounded-b-3xl shadow-deep" panelColor="bg-ink">
-                  <DummyImage seed={item.image}  tone="dar" alt="Founder portrait" className="absolute inset-0" />
-                </ImageReveal>
+      <div className="absolute inset-0">
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt={displayName}
+            className="h-full w-full object-cover"
+            loading="lazy"
+          />
+        ) : (
+          <div className="h-full w-full bg-gradient-to-br from-charcoal via-ink to-pink-deep/40 flex items-center justify-center">
+            <span className="font-display text-2xl text-ivory/30">P</span>
+          </div>
+        )}
+      </div>
+
       <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
 
       {item.tag && (
@@ -48,7 +70,7 @@ export default function CollectionCard({ item, index }) {
       )}
 
       <div className="absolute inset-x-0 bottom-0 z-10 p-5 translate-y-2 group-hover:translate-y-0 transition-transform duration-500 ease-luxury">
-        <h3 className="font-display text-lg font-medium text-ivory">{item.name}</h3>
+        <h3 className="font-display text-lg font-medium text-ivory">{displayName}</h3>
         <span className="block h-px w-0 bg-pink group-hover:w-12 transition-all duration-500 ease-luxury mt-2" />
       </div>
     </motion.div>

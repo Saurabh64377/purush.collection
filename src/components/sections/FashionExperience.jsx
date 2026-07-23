@@ -3,14 +3,20 @@ import { motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SectionHeading from '../ui/SectionHeading'
-import { EXPERIENCE_STEPS } from '../../data/experienceSteps'
+import {
+  PiStorefrontBold, PiCoatHangerBold, PiTShirtBold, PiRulerBold, PiShoppingBagOpenBold,
+} from 'react-icons/pi'
+import { useSetting } from '../../context/SiteDataContext'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const ICONS = [PiStorefrontBold, PiCoatHangerBold, PiTShirtBold, PiRulerBold, PiShoppingBagOpenBold]
 
 export default function FashionExperience() {
   const sectionRef = useRef(null)
   const trackRef = useRef(null)
   const viewportRef = useRef(null)
+  const steps = useSetting('experienceSteps') || []
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -41,7 +47,7 @@ export default function FashionExperience() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [steps.length])
 
   return (
     <section id="experience" ref={sectionRef} className="relative bg-cream overflow-hidden">
@@ -59,26 +65,29 @@ export default function FashionExperience() {
             ref={trackRef}
             className="flex flex-col gap-6 lg:flex-row lg:gap-8 lg:w-max px-6 sm:px-10 lg:pl-16 lg:pr-24"
           >
-            {EXPERIENCE_STEPS.map(({ number, title, description, icon: Icon }, i) => (
-              <motion.div
-                key={number}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.6, delay: i * 0.08 }}
-                className="relative flex-shrink-0 w-full lg:w-[380px] bg-ivory ring-1 ring-graphite/10 shadow-luxury rounded-3xl p-9 flex flex-col gap-6"
-              >
-                <span className="text-6xl font-display font-semibold text-graphite/10">{number}</span>
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-pink/10 border border-pink/20">
-                  <Icon className="text-xl text-pink" />
-                </span>
-                <h3 className="font-display text-2xl font-semibold text-graphite">{title}</h3>
-                <p className="text-sm text-stone leading-relaxed">{description}</p>
-                {i < EXPERIENCE_STEPS.length - 1 && (
-                  <span className="hidden lg:block absolute top-1/2 -right-8 w-8 h-px bg-gradient-to-r from-pink/60 to-transparent" />
-                )}
-              </motion.div>
-            ))}
+            {steps.map(({ number, title, description }, i) => {
+              const Icon = ICONS[i % ICONS.length]
+              return (
+                <motion.div
+                  key={number}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{ duration: 0.6, delay: i * 0.08 }}
+                  className="relative flex-shrink-0 w-full lg:w-[380px] bg-ivory ring-1 ring-graphite/10 shadow-luxury rounded-3xl p-9 flex flex-col gap-6"
+                >
+                  <span className="text-6xl font-display font-semibold text-graphite/10">{number}</span>
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-pink/10 border border-pink/20">
+                    {Icon && <Icon className="text-xl text-pink" />}
+                  </span>
+                  <h3 className="font-display text-2xl font-semibold text-graphite">{title}</h3>
+                  <p className="text-sm text-stone leading-relaxed">{description}</p>
+                  {i < steps.length - 1 && (
+                    <span className="hidden lg:block absolute top-1/2 -right-8 w-8 h-px bg-gradient-to-r from-pink/60 to-transparent" />
+                  )}
+                </motion.div>
+              )
+            })}
           </div>
         </div>
       </div>

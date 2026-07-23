@@ -21,12 +21,21 @@ body {
 
 body {
   @apply bg-cream text-graphite font-body antialiased;
+}
+
+/* Admin panel needs visible cursor */
+body:has(#admin-panel) {
+  cursor: auto;
+}
+
+/* Main site uses custom cursor */
+body:not(:has(#admin-panel)) {
   cursor: none;
 }
 
 @media (pointer: coarse) {
   body {
-    cursor: auto;
+    cursor: auto !important;
   }
 }
 

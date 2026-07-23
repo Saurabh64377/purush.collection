@@ -5,17 +5,24 @@ import RevealText from '../ui/RevealText'
 import MagneticButton from '../ui/MagneticButton'
 import StatCounter from '../ui/StatCounter'
 import ImageReveal from '../ui/ImageReveal'
-import DummyImage from '../ui/DummyImage'
+import { useBrand, useSetting } from '../../context/SiteDataContext'
 
-const CHIPS = [
-  { label: 'T-Shirts', icon: PiTShirtBold },
-  { label: 'Jeans', icon: PiPantsBold },
-  { label: 'Kurtas', icon: PiCoatHangerBold },
-  { label: 'Hoodies', icon: PiHoodieBold },
-  { label: 'Sneakers', icon: PiSneakerBold },
-]
+const CHIP_ICONS = {
+  'T-Shirts': PiTShirtBold,
+  'Jeans': PiPantsBold,
+  'Kurtas': PiCoatHangerBold,
+  'Hoodies': PiHoodieBold,
+  'Sneakers': PiSneakerBold,
+}
 
 export default function Hero() {
+  const brand = useBrand()
+  const hero = useSetting('hero') || {}
+
+  const chips = hero.chips || [
+    { label: 'T-Shirts' }, { label: 'Jeans' }, { label: 'Kurtas' }, { label: 'Hoodies' }, { label: 'Sneakers' },
+  ]
+
   return (
     <section id="home" className="relative overflow-hidden bg-ink pt-32 pb-20 lg:pt-40 lg:pb-24">
       <div className="absolute inset-0 bg-brand-radial" />
@@ -28,12 +35,12 @@ export default function Hero() {
             transition={{ duration: 0.6 }}
             className="text-xs sm:text-sm uppercase tracking-luxury text-pink font-medium"
           >
-            {'Puपुरुष Collection'}
+            {hero.eyebrow || brand.name}
           </motion.span>
 
           <RevealText
             as="h1"
-            text="Wear Confidence. Own Your Style."
+            text={hero.heading || 'Wear Confidence. Own Your Style.'}
             delay={0.15}
             className="max-w-2xl text-5xl sm:text-6xl lg:text-[5.2rem] font-display font-semibold leading-[1.02] text-ivory"
           />
@@ -44,7 +51,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="max-w-md text-base sm:text-lg text-ivory/65"
           >
-            Premium fashion for the new generation — crafted for young men who own their style.
+            {hero.description || brand.description}
           </motion.p>
 
           <motion.div
@@ -53,11 +60,11 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.75 }}
             className="flex flex-wrap items-center gap-4 pt-1"
           >
-            <MagneticButton as="a" href="#collections" variant="solid">
-              Explore Collection
+            <MagneticButton as="a" href={hero.primaryButtonLink || '#collections'} variant="solid">
+              {hero.primaryButtonText || 'Explore Collection'}
             </MagneticButton>
-            <MagneticButton as="a" href="#contact" variant="outline-inverse">
-              Contact Us
+            <MagneticButton as="a" href={hero.secondaryButtonLink || '#contact'} variant="outline-inverse">
+              {hero.secondaryButtonText || 'Contact Us'}
             </MagneticButton>
           </motion.div>
 
@@ -67,9 +74,9 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.95 }}
             className="grid grid-cols-3 gap-8 sm:gap-14 pt-6"
           >
-            <StatCounter value={5} suffix="+" label="Years" />
-            <StatCounter value={500} suffix="+" label="Styles" />
-            <StatCounter value={3000} suffix="+" label="Customers" />
+            {(hero.stats || []).map((stat, i) => (
+              <StatCounter key={i} value={stat.value} suffix={stat.suffix} label={stat.label} />
+            ))}
           </motion.div>
         </div>
 
@@ -81,7 +88,11 @@ export default function Hero() {
             className="relative mx-auto w-full max-w-md"
           >
             <ImageReveal className="aspect-[4/5] rounded-3xl shadow-deep" panelColor="bg-charcoal">
-              <DummyImage seed="/purush2.png" width={800} height={1000} tone="dark" eager alt="Campaign shoot" className="absolute inset-0" />
+              <img
+                src={hero.image || '/purush2.png'}
+                alt="Campaign shoot"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
             </ImageReveal>
 
             <div className="absolute -bottom-6 -left-6 z-20 flex items-center gap-3 rounded-2xl bg-ink p-3 pr-5 shadow-deep ring-1 ring-ivory/10">
@@ -99,15 +110,18 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 1.1 }}
             className="mt-10 flex flex-wrap justify-center gap-3"
           >
-            {CHIPS.map(({ label, icon: Icon }) => (
-              <span
-                key={label}
-                className="flex items-center gap-2 rounded-full border border-ivory/15 px-4 py-2 text-xs uppercase tracking-wide text-ivory/70"
-              >
-                <Icon className="text-sm text-pink" />
-                {label}
-              </span>
-            ))}
+            {chips.map(({ label }) => {
+              const Icon = CHIP_ICONS[label] || PiTShirtBold
+              return (
+                <span
+                  key={label}
+                  className="flex items-center gap-2 rounded-full border border-ivory/15 px-4 py-2 text-xs uppercase tracking-wide text-ivory/70"
+                >
+                  <Icon className="text-sm text-pink" />
+                  {label}
+                </span>
+              )
+            })}
           </motion.div>
         </div>
       </div>
