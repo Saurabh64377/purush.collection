@@ -10,7 +10,7 @@ import {
 } from 'react-icons/pi';
 import api from '../lib/api';
 
-const API_BASE = import.meta.env.PROD ? '' : (import.meta.env.VITE_API_URL || 'http://localhost:5000');
+const API_BASE = import.meta.env.VITE_API_URL || '';
 
 const TABS = [
   { key: 'hero', label: 'Hero Section' },
