@@ -114,25 +114,25 @@ export default function Settings() {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Stats</label>
               {(data.stats || []).map((stat, i) => (
-                <div key={i} className="flex gap-2 mb-2">
+                <div key={i} className="flex flex-col md:flex-row gap-2 mb-2">
                   <input type="number" value={stat.value} onChange={(e) => {
                     const newStats = [...data.stats];
                     newStats[i] = { ...stat, value: parseInt(e.target.value) || 0 };
                     updateEditing('hero', { ...data, stats: newStats });
-                  }} className="w-20 rounded-xl border border-gray-300 px-3 py-2 text-sm" />
+                  }} className="w-full md:w-20 rounded-xl border border-gray-300 px-3 py-2 text-sm" />
                   <input type="text" value={stat.suffix} onChange={(e) => {
                     const newStats = [...data.stats];
                     newStats[i] = { ...stat, suffix: e.target.value };
                     updateEditing('hero', { ...data, stats: newStats });
-                  }} className="w-20 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="+" />
+                  }} className="w-full md:w-20 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="+" />
                   <input type="text" value={stat.label} onChange={(e) => {
                     const newStats = [...data.stats];
                     newStats[i] = { ...stat, label: e.target.value };
                     updateEditing('hero', { ...data, stats: newStats });
-                  }} className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Label" />
+                  }} className="w-full md:flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Label" />
                   <button onClick={() => {
                     updateEditing('hero', { ...data, stats: data.stats.filter((_, j) => j !== i) });
-                  }} className="p-2 text-red-400 hover:text-red-600"><PiTrashBold /></button>
+                  }} className="self-end md:self-auto p-2 text-red-400 hover:text-red-600"><PiTrashBold /></button>
                 </div>
               ))}
               <button onClick={() => updateEditing('hero', { ...data, stats: [...(data.stats || []), { value: 0, suffix: '+', label: '' }] })}
@@ -141,14 +141,14 @@ export default function Settings() {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Chips</label>
               {(data.chips || []).map((chip, i) => (
-                <div key={i} className="flex gap-2 mb-2">
+                <div key={i} className="flex flex-col md:flex-row gap-2 mb-2">
                   <input type="text" value={chip.label} onChange={(e) => {
                     const newChips = [...data.chips];
                     newChips[i] = { label: e.target.value };
                     updateEditing('hero', { ...data, chips: newChips });
-                  }} className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" />
+                  }} className="w-full md:flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" />
                   <button onClick={() => updateEditing('hero', { ...data, chips: data.chips.filter((_, j) => j !== i) })}
-                    className="p-2 text-red-400 hover:text-red-600"><PiTrashBold /></button>
+                    className="self-end md:self-auto p-2 text-red-400 hover:text-red-600"><PiTrashBold /></button>
                 </div>
               ))}
               <button onClick={() => updateEditing('hero', { ...data, chips: [...(data.chips || []), { label: '' }] })}
@@ -167,21 +167,21 @@ export default function Settings() {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Pillars</label>
               {(data.pillars || []).map((p, i) => (
-                <div key={i} className="flex gap-2 mb-2">
+                <div key={i} className="flex flex-col md:flex-row gap-2 mb-2">
                   <input type="text" value={p.number} onChange={(e) => {
                     const newP = [...data.pillars]; newP[i] = { ...p, number: e.target.value };
                     updateEditing('about', { ...data, pillars: newP });
-                  }} className="w-16 rounded-xl border border-gray-300 px-3 py-2 text-sm" />
+                  }} className="w-full md:w-16 rounded-xl border border-gray-300 px-3 py-2 text-sm" />
                   <input type="text" value={p.title} onChange={(e) => {
                     const newP = [...data.pillars]; newP[i] = { ...p, title: e.target.value };
                     updateEditing('about', { ...data, pillars: newP });
-                  }} className="w-32 rounded-xl border border-gray-300 px-3 py-2 text-sm" />
+                  }} className="w-full md:w-32 rounded-xl border border-gray-300 px-3 py-2 text-sm" />
                   <input type="text" value={p.body} onChange={(e) => {
                     const newP = [...data.pillars]; newP[i] = { ...p, body: e.target.value };
                     updateEditing('about', { ...data, pillars: newP });
-                  }} className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" />
+                  }} className="w-full md:flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" />
                   <button onClick={() => updateEditing('about', { ...data, pillars: data.pillars.filter((_, j) => j !== i) })}
-                    className="p-2 text-red-400"><PiTrashBold /></button>
+                    className="self-end md:self-auto p-2 text-red-400"><PiTrashBold /></button>
                 </div>
               ))}
               <button onClick={() => updateEditing('about', { ...data, pillars: [...(data.pillars || []), { number: '', title: '', body: '' }] })}
@@ -222,17 +222,17 @@ export default function Settings() {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Hours</label>
               {(data.hours || []).map((h, i) => (
-                <div key={i} className="flex gap-2 mb-2">
+                <div key={i} className="flex flex-col md:flex-row gap-2 mb-2">
                   <input type="text" value={h.day} onChange={(e) => {
                     const newH = [...data.hours]; newH[i] = { ...h, day: e.target.value };
                     updateEditing('store', { ...data, hours: newH });
-                  }} className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Day" />
+                  }} className="w-full md:flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Day" />
                   <input type="text" value={h.time} onChange={(e) => {
                     const newH = [...data.hours]; newH[i] = { ...h, time: e.target.value };
                     updateEditing('store', { ...data, hours: newH });
-                  }} className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Time" />
+                  }} className="w-full md:flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Time" />
                   <button onClick={() => updateEditing('store', { ...data, hours: data.hours.filter((_, j) => j !== i) })}
-                    className="p-2 text-red-400"><PiTrashBold /></button>
+                    className="self-end md:self-auto p-2 text-red-400"><PiTrashBold /></button>
                 </div>
               ))}
               <button onClick={() => updateEditing('store', { ...data, hours: [...(data.hours || []), { day: '', time: '' }] })}
@@ -245,21 +245,21 @@ export default function Settings() {
         return Array.isArray(data) ? (
           <div className="flex flex-col gap-5">
             {data.map((s, i) => (
-              <div key={i} className="flex gap-2">
+              <div key={i} className="flex flex-col md:flex-row gap-2">
                 <input type="text" value={s.label} onChange={(e) => {
                   const newS = [...data]; newS[i] = { ...s, label: e.target.value };
                   updateEditing('socials', newS);
-                }} className="w-32 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Label" />
+                }} className="w-full md:w-32 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Label" />
                 <input type="text" value={s.href} onChange={(e) => {
                   const newS = [...data]; newS[i] = { ...s, href: e.target.value };
                   updateEditing('socials', newS);
-                }} className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="URL" />
+                }} className="w-full md:flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="URL" />
                 <input type="text" value={s.icon} onChange={(e) => {
                   const newS = [...data]; newS[i] = { ...s, icon: e.target.value };
                   updateEditing('socials', newS);
-                }} className="w-48 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Icon name" />
+                }} className="w-full md:w-48 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Icon name" />
                 <button onClick={() => updateEditing('socials', data.filter((_, j) => j !== i))}
-                  className="p-2 text-red-400"><PiTrashBold /></button>
+                  className="self-end md:self-auto p-2 text-red-400"><PiTrashBold /></button>
               </div>
             ))}
             <button onClick={() => updateEditing('socials', [...data, { label: '', href: '', icon: '' }])}
@@ -271,17 +271,17 @@ export default function Settings() {
         return Array.isArray(data) ? (
           <div className="flex flex-col gap-5">
             {data.map((link, i) => (
-              <div key={i} className="flex gap-2">
+              <div key={i} className="flex flex-col md:flex-row gap-2">
                 <input type="text" value={link.label} onChange={(e) => {
                   const newL = [...data]; newL[i] = { ...link, label: e.target.value };
                   updateEditing('navLinks', newL);
-                }} className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Label" />
+                }} className="w-full md:flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Label" />
                 <input type="text" value={link.href} onChange={(e) => {
                   const newL = [...data]; newL[i] = { ...link, href: e.target.value };
                   updateEditing('navLinks', newL);
-                }} className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="#section" />
+                }} className="w-full md:flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="#section" />
                 <button onClick={() => updateEditing('navLinks', data.filter((_, j) => j !== i))}
-                  className="p-2 text-red-400"><PiTrashBold /></button>
+                  className="self-end md:self-auto p-2 text-red-400"><PiTrashBold /></button>
               </div>
             ))}
             <button onClick={() => updateEditing('navLinks', [...data, { label: '', href: '#' }])}
@@ -294,19 +294,19 @@ export default function Settings() {
         return Array.isArray(data) ? (
           <div className="flex flex-col gap-5">
             {data.map((item, i) => (
-              <div key={i} className="flex gap-2">
+              <div key={i} className="flex flex-col md:flex-row gap-2">
                 <input type="text" value={item.title || item.number || ''} onChange={(e) => {
                   const newD = [...data];
                   if (item.title !== undefined) newD[i] = { ...item, title: e.target.value };
                   else newD[i] = { ...item, number: e.target.value };
                   updateEditing(activeTab, newD);
-                }} className="w-32 rounded-xl border border-gray-300 px-3 py-2 text-sm" />
+                }} className="w-full md:w-32 rounded-xl border border-gray-300 px-3 py-2 text-sm" />
                 <input type="text" value={item.description || ''} onChange={(e) => {
                   const newD = [...data]; newD[i] = { ...item, description: e.target.value };
                   updateEditing(activeTab, newD);
-                }} className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" />
+                }} className="w-full md:flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" />
                 <button onClick={() => updateEditing(activeTab, data.filter((_, j) => j !== i))}
-                  className="p-2 text-red-400"><PiTrashBold /></button>
+                  className="self-end md:self-auto p-2 text-red-400"><PiTrashBold /></button>
               </div>
             ))}
             <button onClick={() => updateEditing(activeTab, [...data, { title: activeTab === 'experienceSteps' ? '' : '', number: '', description: '' }])}
@@ -319,22 +319,22 @@ export default function Settings() {
           <div className="flex flex-col gap-5">
             {data.map((t, i) => (
               <div key={i} className="flex flex-col gap-2 p-4 bg-gray-50 rounded-xl">
-                <div className="flex gap-2">
+                <div className="flex flex-col md:flex-row gap-2">
                   <input type="text" value={t.name} onChange={(e) => {
                     const newT = [...data]; newT[i] = { ...t, name: e.target.value };
                     updateEditing('testimonials', newT);
-                  }} className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Name" />
+                  }} className="w-full md:flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Name" />
                   <input type="text" value={t.role} onChange={(e) => {
                     const newT = [...data]; newT[i] = { ...t, role: e.target.value };
                     updateEditing('testimonials', newT);
-                  }} className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Role" />
+                  }} className="w-full md:flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Role" />
                   <button onClick={() => updateEditing('testimonials', data.filter((_, j) => j !== i))}
-                    className="p-2 text-red-400"><PiTrashBold /></button>
+                    className="self-end md:self-auto p-2 text-red-400"><PiTrashBold /></button>
                 </div>
                 <textarea value={t.quote} onChange={(e) => {
                   const newT = [...data]; newT[i] = { ...t, quote: e.target.value };
                   updateEditing('testimonials', newT);
-                }} rows={2} className="rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Quote" />
+                }} rows={2} className="w-full rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Quote" />
               </div>
             ))}
             <button onClick={() => updateEditing('testimonials', [...data, { name: '', role: '', quote: '' }])}
@@ -347,18 +347,18 @@ export default function Settings() {
           <div className="flex flex-col gap-5">
             {data.map((faq, i) => (
               <div key={i} className="flex flex-col gap-2 p-4 bg-gray-50 rounded-xl">
-                <div className="flex gap-2">
+                <div className="flex flex-col md:flex-row gap-2">
                   <input type="text" value={faq.question} onChange={(e) => {
                     const newF = [...data]; newF[i] = { ...faq, question: e.target.value };
                     updateEditing('faqs', newF);
-                  }} className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Question" />
+                  }} className="w-full md:flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Question" />
                   <button onClick={() => updateEditing('faqs', data.filter((_, j) => j !== i))}
-                    className="p-2 text-red-400"><PiTrashBold /></button>
+                    className="self-end md:self-auto p-2 text-red-400"><PiTrashBold /></button>
                 </div>
                 <textarea value={faq.answer} onChange={(e) => {
                   const newF = [...data]; newF[i] = { ...faq, answer: e.target.value };
                   updateEditing('faqs', newF);
-                }} rows={2} className="rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Answer" />
+                }} rows={2} className="w-full rounded-xl border border-gray-300 px-3 py-2 text-sm" placeholder="Answer" />
               </div>
             ))}
             <button onClick={() => updateEditing('faqs', [...data, { question: '', answer: '' }])}
@@ -402,7 +402,7 @@ export default function Settings() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
         <div>
           <h2 className="text-2xl font-display font-semibold text-gray-900">Site Settings</h2>
           <p className="text-gray-500 mt-1">Manage all website content</p>
@@ -487,7 +487,7 @@ function ImageUpload({ label, value, preview, sectionKey, onPick, onChange }) {
   return (
     <div>
       <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4">
         {displayUrl ? (
           <img src={displayUrl} alt="Preview" className="h-24 w-24 rounded-xl object-cover border" />
         ) : (
@@ -506,7 +506,7 @@ function ImageUpload({ label, value, preview, sectionKey, onPick, onChange }) {
             value={value || ''}
             onChange={(e) => onChange(e.target.value)}
             placeholder="Or paste image URL..."
-            className="rounded-xl border border-gray-300 px-3 py-2 text-xs focus:outline-none focus:border-pink focus:ring-1 focus:ring-pink/30"
+            className="w-full rounded-xl border border-gray-300 px-3 py-2 text-xs focus:outline-none focus:border-pink focus:ring-1 focus:ring-pink/30"
           />
         </div>
       </div>
