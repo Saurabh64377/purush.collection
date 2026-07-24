@@ -422,23 +422,26 @@ export default function Settings() {
         <div className="rounded-xl bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-sm">{error}</div>
       )}
 
-      <div className="flex gap-6">
-        <div className="w-56 flex-shrink-0 flex flex-col gap-1">
-          {TABS.map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              className={`text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                activeTab === tab.key
-                  ? 'bg-pink/10 text-pink'
-                  : 'text-gray-600 hover:bg-gray-100'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+      <div className="flex flex-col md:flex-row gap-4 md:gap-6">
+        {/* Mobile: horizontal scrollable tabs | Desktop: vertical sidebar */}
+        <div className="md:w-56 md:flex-shrink-0 overflow-x-auto -mx-2 px-2 md:mx-0 md:px-0">
+          <div className="flex md:flex-col gap-1 pb-2 md:pb-0 min-w-max md:min-w-0">
+            {TABS.map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
+                className={`whitespace-nowrap text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                  activeTab === tab.key
+                    ? 'bg-pink/10 text-pink'
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="flex-1 bg-white rounded-2xl border border-gray-100 shadow-sm p-6 min-h-[500px]">
+        <div className="flex-1 bg-white rounded-2xl border border-gray-100 shadow-sm p-4 md:p-6 min-h-[500px] overflow-x-auto">
           {renderTabContent()}
         </div>
       </div>
